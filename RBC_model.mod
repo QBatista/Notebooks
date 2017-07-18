@@ -1,19 +1,19 @@
 
 //****************************************************************************
-// Define variables
+// Defining Variables
 //****************************************************************************
 
 var y c k n invest a w r log_y log_invest log_c log_n log_w log_y_n;
 varexo e;
 
 //****************************************************************************
-// Define parameters
+// Defining Parameters
 //****************************************************************************
 
 parameters beta theta gamma alpha delta rho sigma;
 
 //****************************************************************************
-// Set parameter values
+// Setting Parameter Values
 //****************************************************************************
 
 beta = 0.984;
@@ -35,22 +35,22 @@ theta * c * 1 / (1-n) = w;
 [name = 'Household problem FOC 2']
 c(+1) / c = beta / gamma * (alpha* exp(a(+1)) *k(+1)^(alpha-1)*n(+1)^(1-alpha)+1-delta);
 
-[name = 'Law of motion capital'] 
+[name = 'Law of Motion of Capital'] 
 gamma * k = (1-delta) * k(-1) + invest;
 
-[name = 'Production function']
+[name = 'Production Function']
 y = exp(a) * k^(alpha) * (n)^(1-alpha);
 
-[name = 'Resource constraint']
+[name = 'Resource Constraint']
 y = c + invest;
 
-[name = 'Real wage = firm FOC wrt labor']
+[name = 'Firm FOC 1: Real Wage = Marginal Product of Labor']
 w = (1-alpha) * exp(a) * k^alpha * n^(-alpha);
 
-[name = 'Annualized real interst rate = firm FOC wrt capital']
+[name = 'Firm FOC 2: Annualized Real Interst Rate = Marginal Product of Capital']
 r = 4 * alpha * exp(a) * k^(alpha-1) * n^(1-alpha);
 
-[name = 'exogenous TFP process']
+[name = 'Exogenous TFP Process']
 a = rho * a(-1) + e;
 
 [name = 'Definition log output']
@@ -68,14 +68,14 @@ log_n = log(n);
 [name = 'Definition log wage']
 log_w = log(w);
 
-[name = 'Definition log output per capita']
+[name = 'Definition log output per hour worked']
 log_y_n = log(y) - log(n);
 
 end;
 
 
 //****************************************************************************
-// Compute steady state given the starting values
+// Computing the Steady State Given the Starting Values
 //****************************************************************************
 
 initval;
@@ -94,7 +94,7 @@ resid(1);
 steady;
 
 //****************************************************************************
-// Set shock variances
+// Setting Shock Variance
 //****************************************************************************
 
 shocks;
@@ -102,13 +102,13 @@ var e = sigma^2;
 end;
 
 //****************************************************************************
-// Check Blanchard-Kahn-conditions
+// Checking Blanchard-Kahn Conditions
 //****************************************************************************
 
 check;
 
 //****************************************************************************
-// Computation
+// Computing
 //****************************************************************************
 
 stoch_simul(irf=40, hp_filter=1600) log_y log_c log_invest log_n log_y_n log_w r a;
